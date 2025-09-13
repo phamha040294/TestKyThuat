@@ -1,21 +1,37 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Chatbot xử lý sự cố</title>
+  <style>
+    body{font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height:1.6; padding:24px;}
+    h1{font-size:2rem; margin:0 0 8px}
+    p{margin:0 0 24px}
+  </style>
 </head>
 <body>
   <h1>👋 Chào mừng bạn đến với Chatbot!</h1>
-  <p>Vui lòng bấm biểu tượng góc phải màn hình để bắt đầu trò chuyện.</p>
+  <p>Vui lòng bấm biểu tượng bong bóng ở góc phải dưới màn hình để bắt đầu trò chuyện.</p>
 
-  <!-- MÃ NHÚNG CHATBOT BOTPRESS -->
-  <script src="https://cdn.botpress.cloud/webchat/v3.2.1/webchat.js"></script>
+  <!-- 1) Nạp SDK webchat -->
+  <script defer src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+
+  <!-- 2) Khởi tạo sau khi trang tải xong -->
   <script>
-    window.botpressWebChat.init({
-      "configUrl": "https://files.bpcontent.cloud/2025/08/04/02/20250804020820-1WXQYNAA.json",
-      "hostUrl": "https://cdn.botpress.cloud/webchat/v3.2.1",
+    window.addEventListener('load', function () {
+      window.botpressWebChat.init({
+        // Sử dụng config đã share từ Botpress Cloud
+        configUrl: "https://files.bpcontent.cloud/2025/08/04/02/20250804020820-1WXQYNAA.json",
+
+        // Tuỳ chọn hiển thị (tuỳ nghi)
+        useSessionStorage: true,
+        botName: "Chuyên Viên Hỗ Trợ Toà Nhà",
+        composerPlaceholder: "Nhập nội dung sự cố..."
+      });
+
+      // Nếu muốn tự mở widget ngay khi vào trang (tuỳ chọn):
+      // window.botpressWebChat.open();
     });
   </script>
 </body>
