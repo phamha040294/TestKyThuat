@@ -14,21 +14,50 @@
   <h1>👋 Chào mừng bạn đến với Chatbot!</h1>
   <p>Vui lòng bấm biểu tượng bong bóng ở góc phải dưới màn hình để bắt đầu trò chuyện.</p>
 
-  <!-- 1) Nạp SDK webchat -->
+  <!-- 1) Nạp SDK webchat Botpress -->
   <script defer src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
 
-  <!-- 2) Khởi tạo sau khi trang tải xong -->
+  <!-- 2) Khởi tạo webchat -->
   <script>
-    window.addEventListener('load', function () {
+    function initBP() {
+      if (!window.botpressWebChat || !window.botpressWebChat.init) {
+        console.log('[BP] Chưa có botpressWebChat, chờ thêm...');
+        return false;
+      }
+      console.log('[BP] Bắt đầu init...');
       window.botpressWebChat.init({
+        // NHỚ: đúng camelCase
         configUrl: "https://files.bpcontent.cloud/2025/08/04/02/20250804020820-1WXQYNAA.json",
+
+        // vài tuỳ chọn nên có
         useSessionStorage: true,
         botName: "Chuyên Viên Hỗ Trợ Toà Nhà",
         composerPlaceholder: "Nhập nội dung sự cố..."
       });
 
-      // Mở widget ngay khi vào trang (nếu muốn):
-      // window.botpressWebChat.open();
+      // Mở widget ngay (nếu muốn thấy rõ là nó đã lên)
+      window.botpressWebChat.open();
+      console.log('[BP] Đã gọi init + open()');
+      return true;
+    }
+
+    // Đảm bảo gọi init sau khi trang đã load
+    window.addEventListener('load', () => {
+      // Thử init ngay
+      if (initBP()) return;
+
+      // Nếu SDK chưa sẵn sàng, poll thêm chút
+      const poll = setInterval(() => {
+        if (initBP()) clearInterval(poll);
+      }, 400);
+
+      // Sau 5s mà vẫn chưa khởi tạo được → báo lỗi gợi ý
+      setTimeout(() => {
+        if (!window.botpressWebChat || !window.botpressWebChat.init) {
+          console.error('[BP] Không khởi tạo được. Hãy mở DevTools > Console để xem lỗi. ' +
+                        'Kiểm tra configUrl có truy cập được không, và hard reload trang.');
+        }
+      }, 5000);
     });
   </script>
 </body>
