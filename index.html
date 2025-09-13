@@ -21,16 +21,13 @@
   <script>
     window.addEventListener('load', function () {
       window.botpressWebChat.init({
-        // Sử dụng config đã share từ Botpress Cloud
         configUrl: "https://files.bpcontent.cloud/2025/08/04/02/20250804020820-1WXQYNAA.json",
-
-        // Tuỳ chọn hiển thị (tuỳ nghi)
         useSessionStorage: true,
         botName: "Chuyên Viên Hỗ Trợ Toà Nhà",
         composerPlaceholder: "Nhập nội dung sự cố..."
       });
 
-      // Nếu muốn tự mở widget ngay khi vào trang (tuỳ chọn):
+      // Mở widget ngay khi vào trang (nếu muốn):
       // window.botpressWebChat.open();
     });
   </script>
